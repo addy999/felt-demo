@@ -1,0 +1,27 @@
+#title {
+    padding: 50px 0px 50px 0px;
+}
+
+table {
+    margin : auto!important;
+    width : 75%!important;
+}
+
+input {
+    width: 30px;
+}
+
+#save {
+    margin: auto;
+    display: block;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /* background-color: red;
+    color: white; */
+    text-align: center;
+  }
