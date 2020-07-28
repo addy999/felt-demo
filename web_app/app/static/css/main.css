@@ -1,3 +1,8 @@
+body {
+    background: rgb(206,255,251);
+    background: linear-gradient(0deg, rgba(206,255,251,1) 50%, rgba(255,255,255,1) 100%);
+}
+
 #title {
     padding: 50px 0px 50px 0px;
 }
@@ -8,7 +13,12 @@ table {
 }
 
 input {
-    width: 30px;
+    width: 45px;
+    text-align: center!important;
+}
+
+td,th {
+    text-align: center!important;
 }
 
 #buttons {
