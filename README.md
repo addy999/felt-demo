@@ -2,6 +2,8 @@
 
 View, modify, and add data to an inventory database on file (in MySQL).
 
+![](screenshot.png)
+
 ## Launch the server
 - Install flask server with `pip install flask`
 - Head to `web_app` folder and run `flask run --port 8000`
