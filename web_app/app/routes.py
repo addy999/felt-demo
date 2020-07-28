@@ -19,6 +19,6 @@ def get():
 @app.route('/savedata', methods = ['POST'])
 def save():
     data = request.form['data']
-    print("RX", data)
-    write_db(list(data))
+    print(data)
+    overwrite_db(json.loads(data))
     return {}
