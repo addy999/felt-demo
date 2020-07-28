@@ -11,9 +11,15 @@ input {
     width: 30px;
 }
 
-#save {
+#buttons {
+    width: 15%;
     margin: auto;
-    display: block;
+    /* height : 10%; */
+}
+
+#save {
+    margin-left: 10px;
+    /* display: block; */
 }
 
 .footer {

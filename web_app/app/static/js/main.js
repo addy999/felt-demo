@@ -15,32 +15,64 @@ $(document).ready(function () {
 
 });
 
-const EDIT_BUTTON = "<button type='button' class='btn btn-outline-info'><svg width='1em' height='1em' onclick='makeRowEditable(this)' viewBox='0 0 16 16' class='bi bi-pencil' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z'></path><path fill-rule='evenodd' d='M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z'></path></svg></button>"
-const DROPDOWN = {"Cotton" : 0, "Leather" : 1, "Linen" : 2, "Nylon" : 3}
 
-function makeRowEditable (e) {
-    let row = e.parentElement.parentElement.parentElement;
-    let cols = Array.from(row.children);
+function deleteRow (e) {
 
-    // Material -> Create dropdown menu
-    let mat = cols[1].innerHTML;
-    cols[1].innerHTML = "<select> \
-                        <option value='Cotton'>Cotton</option> \
-                        <option value='Leather'>Leather</option> \
-                        <option value='Linen'>Linen</option> \
-                        <option value='Nylon'>Nylon</option> \
-                        </select>";
-    Array.from(cols[1].children)[0].selectedIndex = DROPDOWN[mat]; // Select already filled value
+    // Delete row from table
 
-    // Size, Quantity -> Create input field
-    for(let i=2; i<5; i++) {
-        let quant = cols[i].innerHTML;
-        cols[i].innerHTML = `<input type="text" placeholder=${quant}>`
+    let row = e.parentElement.parentElement;
+    document.getElementsByTagName("table")[0].deleteRow(row.rowIndex);
+
+}
+
+function newRow () {
+
+    // Insert new row in table
+
+    // Create new row in html
+    document.getElementsByTagName("table")[0].tBodies[0].insertRow();
+    let row = Array.from(document.getElementsByTagName("table")[0].tBodies[0].children).splice(-1)[0]; // last inserted row
+
+    // Populate
+    let id = newId(5); // make a 5 char long random id
+    row.innerHTML = "<td>" + id + "</td>";
+
+    // Add spaces for material, size and quantity
+    for(i=0; i<4; i++) {
+        row.innerHTML += "<td></td>";
+    }
+
+    // Finally, add edit + delete button 
+    row.innerHTML +=  "<td>" + EDIT_BUTTON + DELETE_BUTTON + "</td>";
+
+    // Turn row into edit mode
+    let button = row.getElementsByTagName("button")[0];
+    makeRowEditable(button);
+    
+}
+
+function saveData () {
+
+    // Save table data to db 
+
+    let data_field_valid = Array.from(document.getElementsByTagName("input")).every( (i) => {
+        if(i.value.length < 1) {
+            alert("Some fields are blank."); 
+            return false;
+        }
+        else{return true}
+    })
+
+    if(data_field_valid) {
+        $.post("/savedata", {data : JSON.stringify(captureData())})
+        .done( () => {
+            let rows = Array.from(document.getElementsByClassName("table")[0].tBodies[0].children);
+            rows.forEach(reverseRowEditability);
+            alert("Saved successfully.");
+        })
+        .fail( () => {
+            alert("Server error, try again.")
+        });
     }
 }
 
-function rowToHtml (row) {
-    let vals = Object.values(row);
-    let trs = vals.map((v) => {return "<td>" + String(v) + "</td>"})
-    return "<tr>" + trs.join("") + "<td>" + EDIT_BUTTON + "</td>" + "</tr>"
-}
