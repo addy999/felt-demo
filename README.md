@@ -3,9 +3,9 @@
 View, modify, and add data to an inventory database on file (in MySQL).
 
 ## Launch the server
-- Install requirements with `pip install -r requirements.txt`
-- Head to web_app folder and run `flask run`
-- Launch http://localhost:8888 in your browser
+- Install flask server with `pip install flask`
+- Head to `web_app` folder and run `flask run --port 8000`
+- Launch http://localhost:8000 in your browser
 
 ## View the database contents
 - Head to data folder
