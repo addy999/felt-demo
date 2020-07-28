@@ -6,7 +6,7 @@ import json
 from typing import List
 
 script_directory = os.path.dirname(os.path.abspath(__file__))
-DATABASE = script_directory + "/../../fabric.db" 
+DATABASE = script_directory + "/../../data/fabric.db" 
 KEYS = ["id", "material", "length", "width", "quantity"]
 
 def reset_db () -> None:
